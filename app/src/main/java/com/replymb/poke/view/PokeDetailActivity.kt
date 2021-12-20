@@ -24,7 +24,7 @@ import kotlin.collections.ArrayList
 class PokeDetailActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_URL = "com.demo.telepassdigitalandroid.view.PokeDetailActivity_EXTRA_URL"
+        const val EXTRA_URL = "com.replymb.poke.view.PokeDetailActivity_EXTRA_URL"
     }
 
     private val viewModel: PokeDetailDataFlow by viewModels()
@@ -32,6 +32,7 @@ class PokeDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Poke_NoActionBar)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -62,7 +63,7 @@ class PokeDetailActivity : AppCompatActivity() {
                 .into(binding.pokeDetailImageImageView)
         }
 
-        title = data.name?.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } + " #${data.id}"
+        binding.pokeDetailToolbar.title = data.name?.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() } + " #${data.id}"
 
         val images = ArrayList<String>()
         addInto(data.sprites?.other?.home, images)
