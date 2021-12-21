@@ -38,6 +38,7 @@
                 android:id="@+id/pokeDetail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -51,7 +52,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <TextView
                 android:id="@+id/pokeDetailHeightLabel_textView"
@@ -105,6 +105,53 @@
                 app:layout_constraintStart_toEndOf="@id/pokeDetailWeightLabel_textView"
                 tools:text="33" />
 
+            <TextView
+                android:id="@+id/pokeDetailSpeciesLabel_textView"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/side_margin"
+                android:layout_marginTop="@dimen/top_margin"
+                android:text="@string/label_species"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokeDetailWeightLabel_textView" />
+
+            <TextView
+                android:id="@+id/pokeDetailSpecies_textView"
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/side_margin"
+                app:layout_constraintBaseline_toBaselineOf="@id/pokeDetailSpeciesLabel_textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/pokeDetailSpeciesLabel_textView"
+                tools:text="33" />
+
+            <TextView
+                android:id="@+id/pokeDetailTypesLabel_textView"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/side_margin"
+                android:layout_marginTop="@dimen/top_margin"
+                android:text="@string/label_types"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokeDetailSpeciesLabel_textView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="@dimen/top_margin"
+                android:layout_marginHorizontal="@dimen/side_margin"
+                app:layout_constraintTop_toBottomOf="@id/pokeDetailTypesLabel_textView"
+                android:id="@+id/pokeDetailTypes_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/pokeDetailStatsLabel_textView"
@@ -117,7 +164,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pokeDetailWeightLabel_textView" />
+                app:layout_constraintTop_toBottomOf="@id/pokeDetailTypes_recyclerView" />
 
             <LinearLayout
                 android:id="@+id/pokeDetailStats_viewGroup"

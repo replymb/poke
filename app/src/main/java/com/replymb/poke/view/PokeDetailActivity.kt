@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.replymb.poke.R
 import com.replymb.poke.databinding.ActivityDetailBinding
@@ -15,6 +16,8 @@ import com.replymb.poke.network.model.PokeDetail
 import com.replymb.poke.view.adapter.ImagesAdapter
 import com.replymb.poke.widget.StatsIndicator
 import com.google.android.material.snackbar.Snackbar
+import com.replymb.poke.view.adapter.HorizontalSpaceItemDecorator
+import com.replymb.poke.view.adapter.TypesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.uniflow.android.livedata.onStates
 import java.util.*
@@ -53,8 +56,8 @@ class PokeDetailActivity : AppCompatActivity() {
     private fun fillData(data: PokeDetail) {
         binding.pokeDetailLoadingProgressBar.hide()
 
-        data.height?.let { binding.pokeDetailHeightTextView.text = "${it * 10} cm" }
-        data.weight?.let { binding.pokeDetailWeightTextView.text = "${it / 10} kg" }
+        binding.pokeDetailHeightTextView.text = if (data.height!= null) "${data.height * 10} cm" else "n/a"
+        binding.pokeDetailWeightTextView.text = if (data.weight!= null) "${data.weight / 10} kg" else "n/a"
 
         data.sprites?.other?.artwork?.front?.let {
             Glide.with(binding.root).load(it).centerInside()
@@ -72,6 +75,8 @@ class PokeDetailActivity : AppCompatActivity() {
 
         binding.pokeDetailImagesViewPager.adapter = ImagesAdapter(images.filterNot { it.endsWith("svg") })
 
+        binding.pokeDetailSpeciesTextView.text = data.species?.name?.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+
         binding.pokeDetailStatsViewGroup.removeAllViews()
         data.stats?.forEach {
             val view = StatsIndicator(this, null)
@@ -88,6 +93,9 @@ class PokeDetailActivity : AppCompatActivity() {
             binding.pokeDetailStatsViewGroup.addView(view)
         }
 
+        binding.pokeDetailTypesRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.pokeDetailTypesRecyclerView.adapter = TypesAdapter(data.types.orEmpty().mapNotNull { it.type?.name })
+        binding.pokeDetailTypesRecyclerView.addItemDecoration(HorizontalSpaceItemDecorator(R.dimen.side_margin))
     }
 
     private fun addInto(arts: Arts?, images: ArrayList<String>) {
