@@ -26,6 +26,7 @@ class StatsIndicator @JvmOverloads constructor(context: Context, attrs: Attribut
 
     init {
         inflate(getContext(), R.layout.stats_inticator, this)
+        orientation = VERTICAL
         val array = context.obtainStyledAttributes(attrs, R.styleable.StatsIndicator, 0, 0)
 
         statValue = array.getInt(R.styleable.StatsIndicator_statsValue, 0)
